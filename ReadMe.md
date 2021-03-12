@@ -163,9 +163,9 @@ module.exports = router;
 
 ## **Timeline**
 
-March 12th - Milestone 3 Layering
-March 26th - Milestone 4 Exception Handling
-April 9th - Milestone 5 Refactoring
-April 23rd - Milestone 6 Testing
-April 30th - Milestone 7 Packaging
-May 5th - Finalized project code due
+- March 12th - Milestone 3 Layering
+- March 26th - Milestone 4 Exception Handling
+- April 9th - Milestone 5 Refactoring
+- April 23rd - Milestone 6 Testing
+- April 30th - Milestone 7 Packaging
+- May 5th - Finalized project code due
