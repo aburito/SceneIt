@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-
+//some comments to update git account
 const App = (props) => {
   return (
     <div className="max-w-md mx-auto flex p-6 bg-gray-100 mt-10 rounded-lg shadow-xl">
