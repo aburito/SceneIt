@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import Button from "./Button";
 //some comments to update git account
 const App = (props) => {
   return (
@@ -49,12 +49,8 @@ const App = (props) => {
           <h2 className="inline">Password:</h2>
         </span>
         <input className="block h-7 rounded-md shadow-md" type="text" />
-        <button className="box-content h-8 w-16  px-4 py-.5 bg-green-600 hover:bg-green-300 active:bg-green-900 rounded-md shadow-md mx-2 my-2">
-          Log In
-        </button>
-        <button className="box-content h-8 w-16  px-4 py-.5 bg-grey-600 hover:bg-grey-300 active:bg-grey-900 rounded-md shadow-md mx-2 my-2">
-          Sign Up
-        </button>
+        <Button primary>Log in</Button>
+        <Button>Sign Up</Button>
       </div>
     </div>
   );
