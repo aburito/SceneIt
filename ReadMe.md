@@ -54,6 +54,8 @@ The decision to use mysql comes from the fact that my team is familiar with it, 
 
 The presentation layer must be able to present users a graphical user interface to interact with the web application. In order to do so, the application must receive data such as movie information, user information and reviews from the data layer. This will integrate the retrieved data into React Components to present it properly. When the user wants to login, they’ll be directed to the login component and in the event they don’t have an account, they’ll be sent to the account creation component. Once authenticated, users can view the “list” of movies on the home component and along with retrieve more information about a selected movie with its rating and reviews on the movieDetails component. 
 
+Regarding exceptions, there should be almost no exception handling occurring in the presentation layer. Any and all exceptions that might occur through the presentation should be handled in the business layer of the application as it is the layer handling most of the logic and transactions that will be occurring in the application.
+
 ```javascript
 //Log in PAGE - EXAMPLE CODE
 
@@ -118,6 +120,49 @@ export default App;
 
 ```
 
+### Error Handling @ Front-end
+
+```javascript
+//api handling library
+import axios from "axios";
+//crypto library
+import { sha256 } from "crypto-js/sha256";
+//.....
+//.....
+//.....
+const login = (user, pass) => {
+  //hashing the password before sending it off the server
+  const hashedPassword = sha256(pass);
+  //this will be url to the express server
+  const url = "/login";
+
+  axios.post(url, {
+      userName: user,
+      password: hashedPassword,
+    })
+    .then(
+      (response) => {
+        //handle login
+        //send the user to the next page
+        if (response === 540) {
+          // 540 example of positive login
+          //login the user into the application
+          // ....
+        } else if (response === 303) {
+          //303 example of negative login
+          //send user back to login page and render error output message\
+          //...
+        }
+      },
+      (error) => {
+        //handle incorrect login
+        //output error message to user
+        console.log(error);
+      }
+    );
+};
+```
+
 
 
 ### 	Data Layer
@@ -145,9 +190,42 @@ CREATE TABLE `movie_db`.`movie_id_description` (
 	
 ```
 
+### Error Handling @ Data Layer
+
+The data layer will need to contain a bunch of exceptions as well. For whatever data we pull from the database we will need to make sure that we handle any exceptions that may occur if it is unable to pull the data from the database which can happen if any sort of faulty transaction has occurred that might leave some form of dirty data in the database. We will also need to handle exceptions for the data layer being unable to connect to the database as we need to make sure that we are in fact connected to the database before our application makes any changes to it.
+
+```javascript
+//IN THE API WHEN CALLING DATA FROM THE DATABASE - Getting all movies from DB
+//....
+router.get("/", (req, res) => {
+  //returns all movies with this data [title, date, avgScore, img, genre]
+    // connect to your database
+    sql.connect(config, function (err) {
+      if (err) console.log(err);
+      // create Request object
+      var request = new sql.Request();
+      // query to the database and get the records
+      const query = 'select * from movies';// example query
+      request.query(query, function (err, recordset) {
+          if (err) {
+            //handle the error appriopriately send reload or other 
+            //message back to front-end.
+            console.log(err);
+          }
+          // send records as a response
+          res.send(res.json(recordset)); 
+      });
+  });
+  
+});
+//.....
+```
+
 ### 	Business Layer
 
 Our business layer will be handling more of the logic parts of our application. It will make sure that users are signed/confirming they have an account on the app if they plan on leaving reviews. If they don’t have an account, they should only be able to view the reviews and be unable to make any sort of changes. This layer will contain a type of class that will focus on authenticating users. It will also be making sure that all types of transactions that may occur are properly authenticated, such as if a user leaves a 5-star rating on a movie, it will ensure that all users connected to the app are seeing the same thing.
+
+This layer will also be handling most of the exceptions, such as in cases that someone tries to log in but has an incorrect username or password(or both). Also if they try to log in with empty username or password fields as well. We will also need to make sure we handle exceptions that may occur if the person decides to leave an empty written review or not.
 
 ```javascript
 
@@ -156,10 +234,22 @@ const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
+//DB variables
+const sql = require("mssql");
+// config for your database
+var config = {
+  user: "localhost",
+  password: "mypassword",
+  server: "localhost",
+  database: "SceneIt-db",
+};
+
 app.get("/", (req, res) => {
   res.send("Services IS up and running for Scene it.....");
 });
 
+// Login api routes
+app.use("/api/login", require("./routes/api/movies.js"));
 // users api routes
 app.use("/api/members", require("./routes/api/movies.js"));
 // movies api routes
@@ -202,11 +292,11 @@ const router = express.Router();
 // check user
 router.get("/", (req, res) => {
   //returns all movies with this data [title, date, avgScore, img, genre]
-  res.json(movies);
+  res.json(users);
 });
 
 router.get("/:id", (req, res) => {
-  //requesting all data from database about movie with said ID
+  //requesting all data from database about a user with said ID
 });
 
 // registering a user member
@@ -221,6 +311,41 @@ router.put("/:movieID/:userId", (req, res) => {
 
 module.exports = router;
 
+```
+
+### Error Handling @ Back-end
+
+```javascript
+//@ login rout - Login.js
+const express = require("express");
+const uuid = require("uuid");
+const router = express.Router();
+
+
+router.get("/", (req, res) => {
+    const user = req.user;
+    const password = req.password;
+    sql.connect(config, function (err) {
+        if (err) console.log(err);
+        // create Request object
+        var request = new sql.Request();
+        // query to the database and get the records
+        const query = 'select * from user where ';// example query
+        request.query(query, function (err, recordset) {
+            if (recordset.length  = 1) {
+              if(user.localeCompare(recordset.username) === 0 && password.localeCompare(recordset.password) === 0){
+                  //login successfull return user object
+                  res.send(/*..USER OBJ....*/);
+              }
+              
+            }
+            res.send(/*..USER OBJ EMPTY OR ERROR OBJ....*/); 
+        });
+});
+
+
+
+module.exports = router;
 ```
 
 

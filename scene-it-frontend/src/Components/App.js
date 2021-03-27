@@ -1,6 +1,43 @@
 import React from "react";
 import Button from "./Button";
+import axios from "axios";
+//crypto library
+import { sha256 } from "crypto-js/sha256";
 //some comments to update git account
+
+const login = (user, pass) => {
+  //hashing the password before sending it off the server
+  const hashedPassword = sha256(pass);
+  //this will be url to the express server
+  const url = "/login";
+
+  axios
+    .post(url, {
+      userName: user,
+      password: hashedPassword,
+    })
+    .then(
+      (response) => {
+        //handle login
+        //send the user to the next page
+        if (response === 540) {
+          // 540 example of positive login
+          //login the user into the application
+          // ....
+        } else if (response === 303) {
+          //303 example of negative login
+          //send user back to login page and render error output message\
+          //...
+        }
+      },
+      (error) => {
+        //handle incorrect login
+        //output error message to user
+        console.log(error);
+      }
+    );
+};
+
 const App = (props) => {
   return (
     <div className="max-w-md mx-auto flex p-6 bg-gray-100 mt-10 rounded-lg shadow-xl">
@@ -8,7 +45,7 @@ const App = (props) => {
         <h1 className="text-4xl font-bold text-green-900 justify-start">
           Scene It!
         </h1>
-        <p className="text-base text-gray-500 leading-normal">
+        <p className="text-base text-gray-400 leading-normal">
           Lets log in ...
         </p>
         <span className="inline">

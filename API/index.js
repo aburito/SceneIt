@@ -2,8 +2,18 @@ const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
+//DB variables
+const sql = require("mssql");
+// config for your database
+var config = {
+  user: "localhost",
+  password: "mypassword",
+  server: "localhost",
+  database: "SceneIt-db",
+};
+
 app.get("/", (req, res) => {
-  res.send("Services IS up and running for Scene it.....");
+  console.log("DB Listeing");
 });
 
 // users api routes
