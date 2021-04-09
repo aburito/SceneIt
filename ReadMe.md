@@ -350,7 +350,13 @@ module.exports = router;
 
 
 
+## Performance and Refactoring
 
+We have been constantly updating our front-end and back-end of our code, we are planning on refactoring our front-end and making sure that everything has its own component so that we will be able to reuse it. We decided to implement axios, which will allow us to call both the api and the back-end services for a much cleaner handling of the data. Moving further on, we also will have to make sure we sanitize all user input so we do not end up with any form of “dirty data”.
+
+For the back-end, we will need to add support for postgres to satisfy the “surprise instructions” given to us by the client. Regarding the routes, we are working to satisfy all the functionalities that are required by the front-end as we are working on the back-end.
+
+Our biggest challenge will be to make sure that all of the existing code will be able to work with the postgres. Most of our database code has been already written in SQL, including the basic structure of the database. So we will need to make sure that we spend time refactoring the existing code into postgres. 
 
 ## **Timeline**
 
