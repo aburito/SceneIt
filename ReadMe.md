@@ -358,6 +358,18 @@ For the back-end, we will need to add support for postgres to satisfy the “sur
 
 Our biggest challenge will be to make sure that all of the existing code will be able to work with the postgres. Most of our database code has been already written in SQL, including the basic structure of the database. So we will need to make sure that we spend time refactoring the existing code into postgres. 
 
+## **Testing**
+
+Our testing must cover all different layers of our code, making sure that classes don’t spill over into other classes as well as making sure that the database is properly set up and able to communicate with our data layer. The front-end doesn’t really need to be extensively tested. As long as it is able to display information to the user and is intuitive enough to be easily understood and provide the user with the means to create new reviews that are properly stored in the database, then it is working fine.
+
+ 
+
+![img](https://lh6.googleusercontent.com/xI5OqeZJD62UB-n-N4_dge8RGuDXZtcNzFI8HFnWvnFtiUP4Lv7pOBx8QcpBjwN_kYJVSWee6_5u7aEJ5OQ536ToY86ympGDrDcXTDq9ETFqW6sjEH6-eTEpCvZDgdFraGPe8t9n)
+
+​	This is the user model that we have currently created for the front end. For testing the back-end we are going to be using jest js as a testing framework. This test framework runs on node.js and works well with express. It will test every endpoint with the correct and incorrect input to make sure that everything is working correctly.
+
+
+
 ## **Timeline**
 
 - March 12th - Milestone 3 Layering
