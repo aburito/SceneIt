@@ -11,7 +11,7 @@ We decided to follow the route of a movie reviewing system. Thus Scene It! ® wa
 
 ## **Project Description**	
 
-Scene It! ® is a movie review website with a database backend. We will use React for the front and an API for the backend. For our database we will be using MySQL version 8. Our goal is to make a user friendly interface that remains simple yet informative. 
+Scene It! ® is a movie review website with a database backend. We will use React for the front and an API for the backend. For our database we will be using PostgreSQL version 13.2. Our goal is to make a user friendly interface that remains simple yet informative. 
 
 ## **Project Requirements**
 
@@ -41,9 +41,9 @@ For front-end we have opted to use React.js for its reusability purposes, react 
 
 For the backend we have opted to use a Node server running Express.js, the reason for this decision is that express will allow us to create end-points that will allow us to perform actions with the data in the database. Creating endpoints for all the CRUD (Create, Read, Update, Delete) actions as well as other operations that are required for any actions in the application that involve any use of the database.
 
-**Database: *MySQL Version 8*** 
+**Database: *PostgreSQL 13.2*** 
 
-The decision to use mysql comes from the fact that my team is familiar with it, which will allow for smoother development and it will reduce the time we need to train other team members. Another benefit is that through the use of Mysql we will ensure that our database is normalized and has no data that could potentially break the rest of the software. 
+The decision to use PostgreSQL comes from the fact that my team is familiar with it, which will allow for smoother development and it will reduce the time we need to train other team members. Another benefit is that through the use of PostgreSQL we will ensure that our database is normalized and has no data that could potentially break the rest of the software. 
 
 ## **Design Patterns**
 ​	**MVC -** MVC is one of the more generic design patterns that exist, but considering how our application is CRUD based, it would be able to satisfy our needs. MVC contains three kinds of objects, the model, the view, and the controller. Our application involves the user posting reviews to be seen by other users, so the MVC model seems more than satisfactory to our needs. The user would use the controller to post a review which would manipulate our model, which then would update the view that all the other users see. It's a very simple method but it satisfies the requirements of our application. Since MVC uses an observer pattern as well, this would allow the defendants to be updated automatically, allowing new posts on movies to be constantly updated and uploaded to the application.
